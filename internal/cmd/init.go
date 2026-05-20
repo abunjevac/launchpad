@@ -23,7 +23,6 @@ func InitConfig(path string) error {
 	}
 
 	cfg := config.Config{
-		Shortcut: config.DefaultShortcut,
 		Entries: []config.Entry{
 			{
 				Name:    "Terminal",

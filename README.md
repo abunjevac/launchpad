@@ -1,8 +1,8 @@
 # Launchpad
 
 A GTK4-based popup launcher for Ubuntu Mate, written in Go. Displays a configurable list of application entries with
-icons and commands, supports separators, and can be triggered by a global hotkey (default: <kbd>Super</kbd>+<kbd>
-Esc</kbd>).
+icons and commands, supports separators, and can be triggered by a global hotkey (e.g. <kbd>Super</kbd>+<kbd>Esc</kbd>)
+configured via Mate's keyboard shortcuts tool.
 
 ---
 
@@ -17,8 +17,6 @@ Esc</kbd>).
 - **Keyboard navigation** — Navigate entries with arrow keys, activate with <kbd>Enter</kbd> or <kbd>Space</kbd>, close
   with <kbd>Esc</kbd>.
 - **Single instance** — Only one launchpad window can be open at a time.
-- **Global hotkey** — Register <kbd>Super</kbd>+<kbd>Esc</kbd> (or custom) via the `register` command using Mate's Marco
-  window manager.
 - **Skeleton config** — Generate a starter config with `init`.
 - **Icon fallback** — Unresolvable icons gracefully fall back to `application-x-executable`.
 
@@ -90,10 +88,6 @@ launchpad init -c /path/to/config.yaml
 ### Full config reference
 
 ```yaml
-# Global shortcut key combination (used by `launchpad register`)
-# Default: "<Super>Escape"
-shortcut: "<Super>Escape"
-
 entries:
   # Regular entry with themed icon
   - name: "Terminal"
@@ -152,43 +146,13 @@ launchpad -c ~/.config/launchpad/launchpad.yaml
 
 ### Global hotkey
 
-#### Register
+Configure a keyboard shortcut in **System → Preferences → Hardware → Keyboard Shortcuts**:
 
-```bash
-launchpad register
-```
+- **Name**: Launchpad
+- **Command**: `/usr/local/bin/launchpad` (or wherever you installed it)
+- **Shortcut**: <kbd>Super</kbd>+<kbd>Esc</kbd> (or your preference)
 
-This uses Mate's Marco gsettings to bind the shortcut. Picks a free slot (`command-10` / `run-command-10`).
-
-To use a different shortcut:
-
-```bash
-launchpad register --shortcut "<Control><Alt>L"
-```
-
-Or set it in your config:
-
-```yaml
-shortcut: "<Control><Alt>L"
-```
-
-Then `launchpad register` will read it from the config.
-
-#### Unregister
-
-```bash
-launchpad unregister
-```
-
-#### Manual setup (if `register` doesn't work)
-
-1. Open **System → Preferences → Hardware → Keyboard Shortcuts**
-2. Add a new shortcut:
-    - **Name**: Launchpad
-    - **Command**: `/usr/local/bin/launchpad` (or wherever you installed it)
-    - **Shortcut**: <kbd>Super</kbd>+<kbd>Esc</kbd>
-
-Or via CLI:
+Or via the command line:
 
 ```bash
 gsettings set org.mate.Marco.keybinding-commands.command-10 "/usr/local/bin/launchpad"
@@ -199,19 +163,16 @@ gsettings set org.mate.Marco.global-keybindings.run-command-10 "<Super>Escape"
 
 ## CLI Reference
 
-| Command                | Description                                  |
-|------------------------|----------------------------------------------|
-| `launchpad run`        | Run the launchpad UI popup (default command) |
-| `launchpad init`       | Generate a skeleton config file              |
-| `launchpad register`   | Register the global shortcut key             |
-| `launchpad unregister` | Remove the global shortcut key               |
+| Command          | Description                                  |
+|------------------|----------------------------------------------|
+| `launchpad run`  | Run the launchpad UI popup (default command) |
+| `launchpad init` | Generate a skeleton config file              |
 
 ### Flags
 
-| Flag         | Alias | Description                                                 |
-|--------------|-------|-------------------------------------------------------------|
-| `--config`   | `-c`  | Path to config file (default: `~/.launchpad.yaml`)          |
-| `--shortcut` | `-s`  | Shortcut key combination (for `register`, overrides config) |
+| Flag       | Alias | Description                                        |
+|------------|-------|----------------------------------------------------|
+| `--config` | `-c`  | Path to config file (default: `~/.launchpad.yaml`) |
 
 ---
 
@@ -238,7 +199,6 @@ launchpad/
 │       └── main.go            # Entry point, CLI subcommands
 ├── internal/
 │   ├── cmd/
-│   │   ├── keybinding.go      # register/unregister via gsettings
 │   │   └── init.go            # skeleton config generator
 │   ├── config/
 │   │   ├── config.go          # YAML config structs + loader

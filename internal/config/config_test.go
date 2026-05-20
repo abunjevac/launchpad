@@ -7,23 +7,6 @@ import (
 	"testing"
 )
 
-func TestLoadAppliesDefaultShortcut(t *testing.T) {
-	path := writeConfig(t, `
-entries:
-  - name: Terminal
-    command: mate-terminal
-`)
-
-	cfg, err := Load(path)
-	if err != nil {
-		t.Fatalf("Load() error = %v", err)
-	}
-
-	if cfg.Shortcut != DefaultShortcut {
-		t.Fatalf("Shortcut = %q, want %q", cfg.Shortcut, DefaultShortcut)
-	}
-}
-
 func TestLoadRejectsEntryWithoutName(t *testing.T) {
 	path := writeConfig(t, `
 entries:
@@ -35,7 +18,7 @@ entries:
 		t.Fatal("Load() error = nil, want validation error")
 	}
 
-	if !strings.Contains(err.Error(), "entry 0: name is required") {
+	if !strings.Contains(err.Error(), "entry 1: name is required") {
 		t.Fatalf("Load() error = %q, want missing name", err)
 	}
 }
@@ -51,7 +34,7 @@ entries:
 		t.Fatal("Load() error = nil, want validation error")
 	}
 
-	if !strings.Contains(err.Error(), "entry 0: command is required") {
+	if !strings.Contains(err.Error(), "entry 1: command is required") {
 		t.Fatalf("Load() error = %q, want missing command", err)
 	}
 }

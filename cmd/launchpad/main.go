@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/urfave/cli/v3"
 
@@ -31,54 +30,6 @@ func main() {
 				Action: runAction,
 			},
 			{
-				Name:  "register",
-				Usage: "Register the global shortcut key (default: <Super>F1)",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "config",
-						Aliases: []string{"c"},
-						Usage:   "Path to config file (to read shortcut override)",
-					},
-					&cli.StringFlag{
-						Name:    "shortcut",
-						Aliases: []string{"s"},
-						Usage:   "Shortcut key combination (overrides config)",
-					},
-				},
-				Action: func(ctx context.Context, c *cli.Command) error {
-					shortcut := c.String("shortcut")
-
-					if shortcut == "" {
-						cfgPath := resolveConfigPath(c.String("config"))
-
-						if cfg, err := config.Load(cfgPath); err == nil {
-							shortcut = cfg.Shortcut
-						} else {
-							shortcut = config.DefaultShortcut
-						}
-					}
-
-					binaryPath, err := os.Executable()
-					if err != nil {
-						return fmt.Errorf("getting binary path: %w", err)
-					}
-
-					binaryPath, err = filepath.Abs(binaryPath)
-					if err != nil {
-						return fmt.Errorf("resolving binary path: %w", err)
-					}
-
-					return cmd.RegisterKeybinding(binaryPath, shortcut)
-				},
-			},
-			{
-				Name:  "unregister",
-				Usage: "Remove the global shortcut key",
-				Action: func(ctx context.Context, c *cli.Command) error {
-					return cmd.UnregisterKeybinding()
-				},
-			},
-			{
 				Name:  "init",
 				Usage: "Generate a skeleton config file",
 				Flags: []cli.Flag{
@@ -98,7 +49,7 @@ func main() {
 	}
 
 	if err := app.Run(context.Background(), os.Args); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 
 		os.Exit(1)
 	}

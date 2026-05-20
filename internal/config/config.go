@@ -9,12 +9,9 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const DefaultShortcut = "<Super>Escape"
-
 // Config represents the launchpad configuration.
 type Config struct {
-	Shortcut string  `yaml:"shortcut,omitempty"`
-	Entries  []Entry `yaml:"entries"`
+	Entries []Entry `yaml:"entries"`
 }
 
 // Entry represents a single launchpad entry.
@@ -48,19 +45,11 @@ func Load(path string) (*Config, error) {
 		return nil, fmt.Errorf("parsing config %s: %w", path, err)
 	}
 
-	cfg.applyDefaults()
-
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("validating config %s: %w", path, err)
 	}
 
 	return &cfg, nil
-}
-
-func (cfg *Config) applyDefaults() {
-	if strings.TrimSpace(cfg.Shortcut) == "" {
-		cfg.Shortcut = DefaultShortcut
-	}
 }
 
 // Validate rejects malformed entries before the UI tries to render or launch
