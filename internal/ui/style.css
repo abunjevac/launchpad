@@ -1,0 +1,52 @@
+.launchpad {
+    background-color: @theme_base_color;
+    border: 1px solid @borders;
+    border-radius: 8px;
+}
+
+.header {
+    padding: 6px 8px;
+    background-color: alpha(@theme_fg_color, 0.05);
+    border-bottom: 1px solid @borders;
+    border-radius: 8px 8px 0 0;
+}
+
+.header .title {
+    font-weight: bold;
+    padding-left: 6px;
+}
+
+.close-button {
+    padding: 2px;
+    min-width: 24px;
+    min-height: 24px;
+    border: none;
+    background: transparent;
+}
+
+.close-button:hover {
+    background-color: alpha(@theme_fg_color, 0.1);
+    border-radius: 4px;
+}
+
+.entry-row {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.entry-row:hover {
+    background-color: alpha(@theme_selected_bg_color, 0.15);
+}
+
+.entry-row:selected {
+    background-color: alpha(@theme_selected_bg_color, 0.3);
+}
+
+.entry-name {
+    font-size: 14px;
+}
+
+.entries-scroll {
+    border-radius: 0 0 8px 8px;
+}
