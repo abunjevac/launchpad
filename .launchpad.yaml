@@ -1,0 +1,13 @@
+orientation: horizontal
+shortcut: <Super>F1
+entries:
+    - name: Terminal
+      icon: utilities-terminal
+      command: mate-terminal
+    - separator: true
+    - name: Files
+      icon: system-file-manager
+      command: caja .
+    - name: Text Editor
+      icon: accessories-text-editor
+      command: pluma %U
