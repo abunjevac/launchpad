@@ -16,6 +16,10 @@ import (
 	"github.com/abunjevac/launchpad/internal/config"
 )
 
+// keepOpen suppresses ConnectLeave from closing the window.
+// Used by Shift+Enter to keep Launchpad open after launching an app.
+var keepOpen atomic.Bool
+
 // Run starts the launchpad GTK application.
 func Run(cfg *config.Config) {
 	app := gtk.NewApplication("io.github.abunjevac.launchpad", gio.ApplicationFlagsNone)
@@ -74,10 +78,6 @@ func newWindow(app *gtk.Application, cfg *config.Config) {
 
 	centerWindow(win)
 }
-
-// keepOpen suppresses ConnectLeave from closing the window.
-// Used by Shift+Enter to keep Launchpad open after launching an app.
-var keepOpen atomic.Bool
 
 // connectAutoclose closes the window when it loses focus,
 // unless keepOpen is set.
