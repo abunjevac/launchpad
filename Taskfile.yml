@@ -1,0 +1,48 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build the launchpad binary
+    cmds:
+      - go build -o launchpad ./cmd/launchpad/
+    sources:
+      - ./**/*.go
+
+  run:
+    desc: Build and run the launchpad with local config
+    cmds:
+      - task: build
+      - ./launchpad run --config .launchpad.yaml
+
+  lint:
+    desc: Run linters
+    cmds:
+      - golangci-lint run
+      - go vet ./...
+
+  test:
+    desc: Run tests
+    cmds:
+      - go test -count=1 ./...
+
+  scan:
+    desc: Scan for dependency vulnerabilities
+    cmds:
+      - osv-scanner .
+
+  check:
+    desc: Run full quality gate
+    cmds:
+      - task: lint
+      - task: test
+      - task: scan
+
+  install:
+    desc: Install the binary to $GOPATH/bin
+    cmds:
+      - go install ./cmd/launchpad/
+
+  tidy:
+    desc: Tidy Go modules
+    cmds:
+      - go mod tidy
