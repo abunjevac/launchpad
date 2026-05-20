@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/abunjevac/launchpad/internal/version"
 	"github.com/urfave/cli/v3"
 
 	"github.com/abunjevac/launchpad/internal/cmd"
@@ -14,8 +15,9 @@ import (
 
 func main() {
 	app := &cli.Command{
-		Name:  "launchpad",
-		Usage: "A popup launcher for Ubuntu Mate",
+		Name:    "launchpad",
+		Version: version.Version,
+		Usage:   "A popup launcher for Ubuntu Mate",
 		Flags: []cli.Flag{
 			configFlag(),
 		},
