@@ -1,5 +1,11 @@
 # Launchpad
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Go Version](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go&logoColor=white)](go.mod)
+[![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?logo=linux&logoColor=white)](https://github.com/abunjevac/launchpad)
+[![Release](https://img.shields.io/github/v/release/abunjevac/launchpad)](https://github.com/abunjevac/launchpad/releases)
+[![Build](https://github.com/abunjevac/launchpad/actions/workflows/build.yml/badge.svg)](https://github.com/abunjevac/launchpad/actions/workflows/build.yml)
+
 A GTK4-based popup launcher for Ubuntu Mate, written in Go. Displays a configurable list of application entries with
 icons and commands, supports separators, and can be triggered by a global hotkey (e.g. <kbd>Super</kbd>+<kbd>Esc</kbd>)
 configured via Mate's keyboard shortcuts tool.
