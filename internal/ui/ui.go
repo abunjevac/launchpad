@@ -22,7 +22,7 @@ var keepOpen atomic.Bool
 
 // Run starts the launchpad GTK application.
 func Run(cfg *config.Config) {
-	app := gtk.NewApplication("io.github.abunjevac.launchpad", gio.ApplicationFlagsNone)
+	app := gtk.NewApplication("io.github.abunjevac.launchpad", gio.ApplicationDefaultFlags)
 
 	app.ConnectActivate(func() {
 		newWindow(app, cfg)
