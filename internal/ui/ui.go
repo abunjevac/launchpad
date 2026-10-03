@@ -131,7 +131,7 @@ func centerWindow(win *gtk.ApplicationWindow) {
 				centerX := max(geo.X()+(geo.Width()-width)/2, 0)
 				centerY := max(geo.Y()+(geo.Height()-height)/2, 0)
 
-				for attempt := 0; attempt < 10; attempt++ {
+				for range 10 {
 					time.Sleep(10 * time.Millisecond)
 
 					cmd := exec.Command(
