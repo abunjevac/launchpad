@@ -7,6 +7,8 @@ tasks:
       - go build -o launchpad ./cmd/launchpad/
     sources:
       - ./**/*.go
+    generates:
+      - launchpad
 
   pack:
     desc: Package devtabs binary with upx
@@ -43,9 +45,12 @@ tasks:
       - task: scan
 
   install:
-    desc: Install the binary to $GOPATH/bin
+    desc: Build launchpad, pack it with upx and install to ~/.local/bin
     cmds:
-      - go install ./cmd/launchpad/
+      - task: build
+      - task: pack
+      - mkdir -p ~/.local/bin
+      - mv launchpad ~/.local/bin/launchpad
 
   tidy:
     desc: Tidy Go modules
